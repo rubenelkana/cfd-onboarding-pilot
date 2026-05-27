@@ -1,0 +1,30 @@
+# OpenFOAM run-time output (regenerable)
+*/[0-9]*/
+*/processor*/
+*/postProcessing/
+*/dynamicCode/
+*.foam
+log.*
+
+# CFD mesh files (regenerable from blockMeshDict / snappyHexMeshDict)
+constant/polyMesh/
+constant/triSurface/*.stl
+
+# Plotting + analysis outputs
+*.png
+*.pdf
+!docs/figures/*.png
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+.DS_Store
+
+# Secrets
+.env
