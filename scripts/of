@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# Run a command inside the OpenFOAM 11 container with the repo mounted.
+# Overrides the image's interactive entrypoint so commands run in batch mode.
+# Usage:
+#   ./scripts/of foamVersion
+#   ./scripts/of blockMesh
+#   ./scripts/of "cd tutorials/cavity && blockMesh && foamRun"
+
+set -euo pipefail
+
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+IMAGE="openfoam/openfoam11-paraview510"
+PLATFORM="linux/amd64"
+
+# Override --entrypoint to skip the image's interactive welcome shell.
+# Source the OpenFOAM bashrc explicitly so commands like foamRun/blockMesh resolve.
+docker run --rm \
+  --platform "$PLATFORM" \
+  --entrypoint /bin/bash \
+  -v "$REPO_ROOT":/workspace \
+  -w /workspace \
+  "$IMAGE" \
+  -c "source /opt/openfoam11/etc/bashrc && $*"

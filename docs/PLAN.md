@@ -10,8 +10,8 @@ The pilot is **bounded by what a candidate can reasonably do solo before PhD adm
 
 | # | Phase | Status | Deliverable |
 |---|---|---|---|
-| 1 | Environment — Docker + OpenFOAM 12 container | ⏳ in progress | Working `foamHelp`; container documented |
-| 2 | Cavity flow — non-reacting baseline tutorial | ⏳ queued | Reproduced velocity field; matplotlib plot; setup-log notes |
+| 1 | Environment — Docker + OpenFOAM 11 container | ✅ done (2026-05-27) | `scripts/of` wrapper works; `foamVersion` returns OpenFOAM-11 |
+| 2 | Cavity flow — non-reacting baseline tutorial | ✅ done (2026-05-27) | Velocity centrelines reproduced (peak `|U_x|` = 1.000 m/s = lid speed); see `notes/02_cavity.md` + `figures/02_cavity_centrelines.png` |
 | 3 | Combustion tutorial — `simpleReactingFoam` counter-flow flame | ⏳ queued | Temperature + species concentration plots; tutorial notes |
 | 4 | Parameter sweep on the combustion case | ⏳ queued | 5–10 runs over one parameter; trend plots; CSV dataset of inputs↔outputs |
 | 5 | Annotated reading — Liu, Zhang & Shen (2022, *Chem. Eng. Sci.*) | ⏳ queued (post-send) | Markdown notes: figure-by-figure annotation, method critique, extension ideas |
@@ -34,7 +34,7 @@ The pilot is **bounded by what a candidate can reasonably do solo before PhD adm
 
 ## Choice of stack
 
-**OpenFOAM 12** via Docker. Chosen over ANSYS Fluent for licence accessibility (Fluent requires a commercial licence the candidate does not yet hold); transition to Fluent under a UWA academic licence post-admission is straightforward — both are Navier-Stokes solvers with similar primitives. Plotting via Python (matplotlib, pandas). ML in Phase 6 via scikit-learn / XGBoost.
+**OpenFOAM 11** via Docker. Chosen over ANSYS Fluent for licence accessibility (Fluent requires a commercial licence the candidate does not yet hold); transition to Fluent under a UWA academic licence post-admission is straightforward — both are Navier-Stokes solvers with similar primitives. Plotting via Python (matplotlib, pandas). ML in Phase 6 via scikit-learn / XGBoost.
 
 ## Honest scoping
 

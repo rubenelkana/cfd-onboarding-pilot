@@ -1,0 +1,30 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| Sample the velocity along the vertical and horizontal centrelines of the
+| lid-driven cavity at the final time. Output goes to postProcessing/.
+\*---------------------------------------------------------------------------*/
+
+type            sets;
+libs            ("libsampling.so");
+
+interpolationScheme cellPoint;
+setFormat       raw;
+
+fields          ( U );
+
+sets
+(
+    verticalCentreline
+    {
+        type    lineCellFace;
+        axis    y;
+        start   (0.05 0 0.005);
+        end     (0.05 0.1 0.005);
+    }
+    horizontalCentreline
+    {
+        type    lineCellFace;
+        axis    x;
+        start   (0 0.05 0.005);
+        end     (0.1 0.05 0.005);
+    }
+);
