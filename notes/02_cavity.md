@@ -2,14 +2,17 @@
 
 **Date:** 2026-05-27
 **Solver:** `foamRun` with module `incompressibleFluid`
+**Turbulence closure:** RAS (Reynolds-averaged Navier–Stokes) with the standard k–ε model — this is the bundled OF11 tutorial default in `constant/momentumTransport`; I kept the default rather than overriding it to laminar for this first toolchain test
+**Kinematic viscosity:** ν = 1 × 10⁻⁵ m²/s (from `constant/physicalProperties`; air-at-STP-like)
+**Reynolds number:** Re = U_lid · L / ν = 1 · 0.1 / 10⁻⁵ ≈ **10,000**
 **Mesh:** 20 × 20 × 1 (the bundled OpenFOAM 11 tutorial)
 **Wall time:** 5.7 s on Apple M2 via Rosetta-2 emulation (Docker Desktop 27.5.1, `--platform linux/amd64`)
 
 ## What this case is
 
-The canonical first CFD case: a square cavity with a lid that moves at 1 m/s in the $+x$ direction. The other three walls are no-slip. Inside the cavity, a clockwise eddy forms; the velocity along the vertical centreline at $x = 0.05\,\text{m}$ should be 1 m/s at the lid, drop sharply to a recirculation peak negative value somewhere in the lower third, and pass through zero near the middle.
+The lid-driven cavity: a square cavity with a lid that moves at 1 m/s in the $+x$ direction; the other three walls are no-slip. Inside the cavity, a clockwise eddy forms with corner recirculations.
 
-This is a non-reacting incompressible test — its job is to confirm that the toolchain runs end-to-end, not to teach me anything about combustion.
+This is a non-reacting incompressible test — its job is to confirm that the toolchain runs end-to-end. **It is not a Ghia 1982 laminar benchmark reproduction**: at Re ≈ 10,000 with k–ε RAS closure on a coarse 20 × 20 mesh, this case sits in the turbulent regime where bundled-OF11 default closures dominate the solution. Compared to a fine-mesh Erturk 2009 high-Re reference, the centreline profiles would be qualitatively similar but not quantitatively faithful. The deliberate purpose here is pipeline verification, not benchmark validation.
 
 ## What I did
 
@@ -23,12 +26,13 @@ This is a non-reacting incompressible test — its job is to confirm that the to
 
 ![cavity centrelines](../figures/02_cavity_centrelines.png)
 
-- **Vertical centreline ($x = 0.05$):** $U_x$ climbs from $-0.16\,\text{m/s}$ at the bottom of the cavity (where the floor recirculation drags the flow backward) through zero near $y = 0.06$ and up to the lid speed $1.0\,\text{m/s}$ at $y = 0.1$. The numerical sanity check in the plot script confirms the peak $|U_x|$ in the upper 15% of the cavity is exactly 1.000 m/s — matches the lid Dirichlet boundary condition to printed precision.
-- **Horizontal centreline ($y = 0.05$):** $U_y$ peaks positive ($\sim +0.14\,\text{m/s}$) near the left wall and negative ($\sim -0.21\,\text{m/s}$) near the right wall. This is the antisymmetric "rotation" signature of the central eddy: fluid rising on the left, falling on the right.
+- **Vertical centreline ($x = 0.05$):** $U_x$ climbs from $-0.16\,\text{m/s}$ at the bottom of the cavity through zero near $y = 0.06$ and up to the lid speed $1.0\,\text{m/s}$ at $y = 0.1$. The numerical sanity check in the plot script confirms the peak $|U_x|$ in the upper 15% of the cavity is exactly 1.000 m/s — this verifies the lid Dirichlet boundary condition is enforced correctly, not the physics of the interior flow.
+- **Horizontal centreline ($y = 0.05$):** $U_y$ peaks positive ($\sim +0.14\,\text{m/s}$) near the left wall and negative ($\sim -0.21\,\text{m/s}$) near the right wall — the antisymmetric "rotation" signature of the central eddy: fluid rising on the left, falling on the right. The asymmetry in peak magnitudes (+0.14 vs −0.21) reflects the strong inertia of the lid-driven primary vortex at this Re.
 
 ## What I learned
 
 - The OpenFOAM 11 solver-as-module pattern (`foamRun` + `solver` entry in `controlDict`) is cleaner than the OpenFOAM 7 / `icoFoam`-style invocation I'd read about in older tutorials. Worth noting for Phase 3 — combustion will use the same `foamRun` shell with a different module (`multicomponentFluid` or similar).
+- Always read `constant/momentumTransport` and `constant/physicalProperties` before interpreting a case. The bundled OF11 cavity tutorial is configured as k–ε RAS at Re ≈ 10,000, not the laminar Re ≈ 10 case I initially expected from the older OpenFOAM 7-era cavity tutorials. The presence of `0/k`, `0/epsilon`, and `0/nut` fields is itself the giveaway.
 - Running amd64 OpenFOAM via Rosetta-2 on Apple Silicon is essentially free at this scale — 5.7 s wall time for 21 time steps × 400 cells means I'm probably not getting close to the emulation overhead floor.
 - `postProcess -func sampleDict -time N` is the idiomatic way to extract centreline data after a run; cleaner than parsing the field files by hand.
 

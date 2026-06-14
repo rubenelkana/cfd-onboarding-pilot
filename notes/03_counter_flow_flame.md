@@ -38,11 +38,11 @@ Everything else is the stock tutorial (mesh, chemistry, transport, boundary cond
 
 ![flame axis profile](../figures/03_flame_axis_t0.1.png)
 
-- **Temperature panel (left).** Sharp Gaussian-shaped peak at $x = 11.6$ mm reaching $T = 2105$ K. Inlet temperature 293 K is preserved at both ends. The peak sits closer to the air boundary than to the fuel boundary because the stoichiometric mixture fraction for CH₄/air is small ($Z_{st} \approx 0.055$ by mass) — combustion needs much more air than methane per unit mass, so the iso-surface $Z = Z_{st}$ sits close to where $Z$ drops toward zero on the air side. Differential diffusion (CH₄ is lighter than O₂ and N₂) and finite-rate chemistry shift the actual peak-temperature location modestly from the pure stoichiometric prediction, which is why $x_{flame}$ at $U_{jet} = 0.1$ lands at 11.6 mm rather than nearer 18 mm.
+- **Temperature panel (left).** Sharp Gaussian-shaped peak at $x = 11.6$ mm reaching $T = 2105$ K. Inlet temperature 293 K is preserved at both ends. The peak sits 1.6 mm onto the air side of the geometric midpoint because for symmetric momentum jets the stagnation plane is at the geometric midpoint $x = 10$ mm, and a diffusion flame establishes on the oxidiser side of the stagnation plane — the stoichiometric mixture fraction surface $Z = Z_{st} \approx 0.055$ for CH₄/air sits in the air-side mixing layer (small $Z_{st}$ because combustion needs much more air than methane per unit mass). For CH₄/air the Lewis number is close to unity ($\text{Le}_{CH_4} \approx 0.97$), so differential-diffusion shifts of the peak-T location are second-order; the dominant geometric determinant here is the stagnation-plane location, modulated by finite-rate chemistry at higher strain (which moves the peak as $U_{jet}$ sweeps in Phase 4).
 - **Species panel (right).** Five fields tell the chemistry story:
   - Y(CH₄) is 1.0 at the fuel inlet, drops sharply through the reaction zone, and is fully consumed by $x \approx 12.5$ mm.
-  - Y(O₂) is ~0.23 at the air inlet (correct stoichiometric air composition), drops to zero through the reaction zone where it is consumed.
-  - Y(N₂) ramps from 0 (fuel side) to ~0.77 (air side) — correct stoichiometric air N₂ fraction. Inert, so no consumption.
+  - Y(O₂) is ~0.23 at the air inlet — matches the simplified 23/77 air composition prescribed in `0/O2` — and drops to zero through the reaction zone.
+  - Y(N₂) ramps from 0 (fuel side) to ~0.77 (air side) — matches the prescribed air-inlet N₂ mass fraction. Inert, so no consumption.
   - Y(CO₂) and Y(H₂O) peak together at $x \approx 11$ mm, both at ~0.10–0.12 mass fraction. Product co-location with the temperature peak is the textbook signature of a reaction zone.
 
 ## What I learned
@@ -57,9 +57,9 @@ Everything else is the stock tutorial (mesh, chemistry, transport, boundary cond
 | Quantity | Observed | Expected | Note |
 |---|---|---|---|
 | Peak temperature | 2105 K | ~2200 K (CH₄/air adiabatic, single-step) | Slightly lower than adiabatic — typical for diffusion flames at finite strain rate |
-| Peak T location | $x = 11.6$ mm | Near the stoichiometric-Z surface, expected on the air side of geometric midpoint since $Z_{st} \approx 0.055$ | ✓ correct side; finite-rate chemistry shifts the actual peak modestly toward the fuel side of the pure-mixing prediction |
+| Peak T location | $x = 11.6$ mm | On the oxidiser side of the stagnation plane (geometric midpoint at $x = 10$ mm for symmetric momentum flux), where $Z = Z_{st}$ sits because $Z_{st} \approx 0.055$ for CH₄/air | ✓ correct side; 1.6 mm displacement from midpoint is consistent with $Z_{st}$ surface location in the air-side mixing layer |
 | Y(CO₂) max | 0.12 | ~0.15 (stoichiometric CH₄/air) | ✓ within reasonable range for finite-rate single-step chemistry |
-| Y(N₂) on air inlet | 0.77 | 0.767 (air composition) | ✓ exact |
+| Y(N₂) on air inlet | 0.77 | 0.77 prescribed BC (simplified 23/77 air vs textbook 23.2/76.8) | ✓ matches the prescribed BC — this row is a BC-enforcement check, not a physics measurement |
 
 ## Pointer to Phase 4
 
