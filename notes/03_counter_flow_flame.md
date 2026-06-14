@@ -38,7 +38,7 @@ Everything else is the stock tutorial (mesh, chemistry, transport, boundary cond
 
 ![flame axis profile](../figures/03_flame_axis_t0.1.png)
 
-- **Temperature panel (left).** Sharp Gaussian-shaped peak at $x = 11.6$ mm reaching $T = 2105$ K. Inlet temperature 293 K is preserved at both ends. The peak is shifted to the air side of the geometric midpoint — characteristic of CH₄/air diffusion flames, where the stoichiometric surface sits in the fuel-lean region because fuel mass diffuses faster than air mass.
+- **Temperature panel (left).** Sharp Gaussian-shaped peak at $x = 11.6$ mm reaching $T = 2105$ K. Inlet temperature 293 K is preserved at both ends. The peak sits closer to the air boundary than to the fuel boundary because the stoichiometric mixture fraction for CH₄/air is small ($Z_{st} \approx 0.055$ by mass) — combustion needs much more air than methane per unit mass, so the iso-surface $Z = Z_{st}$ sits close to where $Z$ drops toward zero on the air side. Differential diffusion (CH₄ is lighter than O₂ and N₂) and finite-rate chemistry shift the actual peak-temperature location modestly from the pure stoichiometric prediction, which is why $x_{flame}$ at $U_{jet} = 0.1$ lands at 11.6 mm rather than nearer 18 mm.
 - **Species panel (right).** Five fields tell the chemistry story:
   - Y(CH₄) is 1.0 at the fuel inlet, drops sharply through the reaction zone, and is fully consumed by $x \approx 12.5$ mm.
   - Y(O₂) is ~0.23 at the air inlet (correct stoichiometric air composition), drops to zero through the reaction zone where it is consumed.
@@ -57,7 +57,7 @@ Everything else is the stock tutorial (mesh, chemistry, transport, boundary cond
 | Quantity | Observed | Expected | Note |
 |---|---|---|---|
 | Peak temperature | 2105 K | ~2200 K (CH₄/air adiabatic, single-step) | Slightly lower than adiabatic — typical for diffusion flames at finite strain rate |
-| Peak T location | $x = 11.6$ mm | Stoichiometric surface, expected on the air side of geometric midpoint | ✓ correct side |
+| Peak T location | $x = 11.6$ mm | Near the stoichiometric-Z surface, expected on the air side of geometric midpoint since $Z_{st} \approx 0.055$ | ✓ correct side; finite-rate chemistry shifts the actual peak modestly toward the fuel side of the pure-mixing prediction |
 | Y(CO₂) max | 0.12 | ~0.15 (stoichiometric CH₄/air) | ✓ within reasonable range for finite-rate single-step chemistry |
 | Y(N₂) on air inlet | 0.77 | 0.767 (air composition) | ✓ exact |
 
