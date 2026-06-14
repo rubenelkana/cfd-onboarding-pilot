@@ -2,7 +2,7 @@
 
 **Date:** 2026-05-27
 **Solver:** `foamRun` with module `incompressibleFluid`
-**Turbulence closure:** RAS (Reynolds-averaged Navier–Stokes) with the standard k–ε model — this is the bundled OF11 tutorial default in `constant/momentumTransport`; I kept the default rather than overriding it to laminar for this first toolchain test
+**Turbulence closure:** RAS (Reynolds-averaged Navier–Stokes) with the standard k–ε model — this is the bundled OF11 tutorial default in `constant/momentumTransport`; I kept the default since the goal of this first toolchain test was BC enforcement and pipeline correctness rather than benchmark fidelity
 **Kinematic viscosity:** ν = 1 × 10⁻⁵ m²/s (from `constant/physicalProperties`; air-at-STP-like)
 **Reynolds number:** Re = U_lid · L / ν = 1 · 0.1 / 10⁻⁵ ≈ **10,000**
 **Mesh:** 20 × 20 × 1 (the bundled OpenFOAM 11 tutorial)
