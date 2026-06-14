@@ -28,3 +28,6 @@ venv/
 
 # Secrets
 .env
+
+# Private study companions — for me only, not for public repo
+study-notes.md
