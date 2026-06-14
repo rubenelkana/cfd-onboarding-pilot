@@ -13,7 +13,7 @@ The pilot is **bounded by what a candidate can reasonably do solo before PhD adm
 | 1 | Environment — Docker + OpenFOAM 11 container | ✅ done (2026-05-27) | `scripts/of` wrapper works; `foamVersion` returns OpenFOAM-11 |
 | 2 | Cavity flow — non-reacting baseline tutorial | ✅ done (2026-05-27) | Velocity centrelines reproduced (peak `|U_x|` = 1.000 m/s = lid speed); see `notes/02_cavity.md` + `figures/02_cavity_centrelines.png` |
 | 3 | Combustion tutorial — `multicomponentFluid` counter-flow flame | ✅ done (2026-05-28) | Peak T = 2105 K at x = 11.6 mm; CO₂ + H₂O peak in reaction zone overlap T peak; see `notes/03_counter_flow_flame.md` + `figures/03_flame_axis_t0.1.png` |
-| 4 | Parameter sweep on the combustion case | ⏳ queued | 5–10 runs over one parameter; trend plots; CSV dataset of inputs↔outputs |
+| 4 | Symmetric-jet velocity sweep on the combustion case | ✅ done (2026-05-28) | 6 runs over $U_{jet}$ ∈ [0.05, 0.30] m/s; clean monotonic trends in peak $T$, flame position, FWHM, products; CSV at `tutorials/sweep_velocity/results.csv`; trend figure at `figures/04_sweep_trends.png`; see `notes/04_velocity_sweep.md` |
 | 5 | Annotated reading — Liu, Zhang & Shen (2022, *Chem. Eng. Sci.*) | ⏳ queued (post-send) | Markdown notes: figure-by-figure annotation, method critique, extension ideas |
 | 6 | ML surrogate on the Phase-4 dataset | ⏳ queued (post-send) | Random forest / XGBoost regressor trained on Phase-4 CSV; CFD-truth vs ML-prediction plots; notes on the methodological homage to Liu 2022 |
 

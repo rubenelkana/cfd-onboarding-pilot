@@ -1,0 +1,23 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| Sample T and species mass fractions along the horizontal axis (y=0)
+| through the flame sheet. fuel inlet at x=0, air inlet at x=0.02.
+\*---------------------------------------------------------------------------*/
+
+type            sets;
+libs            ("libsampling.so");
+
+interpolationScheme cellPoint;
+setFormat       raw;
+
+fields          ( T CH4 O2 N2 CO2 H2O );
+
+sets
+(
+    axis
+    {
+        type    lineCellFace;
+        axis    x;
+        start   (0.0005 0 0);
+        end     (0.0195 0 0);
+    }
+);
